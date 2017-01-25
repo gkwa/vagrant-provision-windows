@@ -1,0 +1,13 @@
+* TODO Fix this: this script will delete all your vms on your localhost
+* TODO Parameterize forcing packer rebuild (see --always-make)
+
+Sometimes I want to rebuild packer image, but most times I don't want to wait for that.
+
+* Steps to get running
+
+#+BEGIN_SRC powershell
+git clone https://github.com/taylormonacelli/vagrant-provision-windows
+cd vagrant-provision-windows
+git submodule update --init --recursive
+./provision.ps1
+#+END_SRC

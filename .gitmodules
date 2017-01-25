@@ -1,0 +1,3 @@
+[submodule "boxcutter-windows"]
+	path = boxcutter-windows
+	url = https://github.com/taylormonacelli/boxcutter-windows
