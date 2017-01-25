@@ -102,17 +102,3 @@ end
 	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
 }
-
-Exit
-
-##############################
-# usage example:
-##############################
-$root=$pwd
-$vmname='eval-win7x64-enterprise'
-. provision.ps1
-packer_build $vmname
-# or
-packer_rebuild $vmname
-# then
-vagrant_up_with_without_autoproxy $vmname

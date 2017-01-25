@@ -13,5 +13,14 @@ Sometimes I want to rebuild packer image, but most times I don't want to wait fo
 git clone https://github.com/taylormonacelli/vagrant-provision-windows
 cd vagrant-provision-windows
 git submodule update --init --recursive
-./provision.ps1
+
+# example usage:
+. .\provision.ps1
+$root=$pwd
+$vmname='eval-win7x64-enterprise'
+packer_build $vmname
+# or
+packer_rebuild $vmname
+# then
+vagrant_up_with_without_autoproxy $vmname
 #+END_SRC
