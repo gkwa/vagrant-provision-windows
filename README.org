@@ -15,9 +15,9 @@ cd vagrant-provision-windows
 git submodule update --init --recursive
 
 # example usage:
-. .\provision.ps1
 $root=$pwd
-$vmname='eval-win7x64-enterprise'
+. $root\provision.ps1
+$vmname='eval-win7x64-enterprise' # see (make -C boxcutter-windows list | grep eval)
 packer_build $vmname
 # or
 packer_rebuild $vmname
