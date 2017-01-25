@@ -1,4 +1,8 @@
 * TODO Fix this: this script will delete all your vms on your localhost
+* TODO Verify whether win_settings makensis has dependencies that are not available publicly
+
+Without looking, I expect this depends on nsis-streambox2.  Remove this dependency?
+
 * TODO Parameterize forcing packer rebuild (see --always-make)
 
 Sometimes I want to rebuild packer image, but most times I don't want to wait for that.
