@@ -62,7 +62,7 @@ function packer_rebuild( $vmname )
 	cd "$d"
 }
 
-function my_vagrant_up($vmname)
+function vagrant_up_with_without_autoproxy($vmname)
 {
 	cd $root
 	cleanup $vmname
@@ -72,12 +72,20 @@ function my_vagrant_up($vmname)
 	remove-item -ea 0 -recurse $root/t
 	mkdir -force $root/t | out-null
 
+	cd $root
+	make -C win_settings installer=..\\t\\disable_auto_proxy.exe
 	if(test-path $root/t/Vagrantfile){
 		vagrant destroy --force
 	}
 	@"
+`$script = <<-'SCRIPT'
+cd c:\\vagrant
+./disable_auto_proxy.exe /S
+SCRIPT
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
+config.vm.provision "shell", inline: `$script
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
@@ -107,4 +115,4 @@ packer_build $vmname
 # or
 packer_rebuild $vmname
 # then
-my_vagrant_up $vmname
+vagrant_up_with_without_autoproxy $vmname
