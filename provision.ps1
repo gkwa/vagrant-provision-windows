@@ -86,9 +86,9 @@ cd c:\\vagrant
 ./disable_auto_proxy.exe /S
 SCRIPT
 
-`$script2 = <<-'SCRIPT2'
+`$script2 = <<SCRIPT2
 cd c:\\vagrant
-wscript .\disable_auto_proxy.vbs
+wscript .\\disable_auto_proxy.vbs
 SCRIPT2
 
 Vagrant.configure("2") do |config|
