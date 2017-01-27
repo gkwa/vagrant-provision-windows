@@ -69,12 +69,14 @@ function vagrant_up_with_without_autoproxy($vmname)
 
 	# instantiate new test instance
 	cd $root
-	remove-item -ea 0 -recurse $root/t
-	mkdir -force $root/t | out-null
+	$vmdir = "$root/$vmname"
+	remove-item -ea 0 -recurse $vmdir
+	mkdir -force $vmdir | out-null
 
 	cd $root
-	make -C win_settings installer=..\\t\\disable_auto_proxy.exe
-	if(test-path $root/t/Vagrantfile){
+	make -C win_settings installer=disable_auto_proxy.exe
+	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
+	if(test-path $vmdir/Vagrantfile){
 		vagrant destroy --force
 	}
 	@"
@@ -92,9 +94,9 @@ config.vm.provider "virtualbox" do |v|
 v.cpus = 2
 end
 end
-"@ | Out-File -encoding 'ASCII' $root/t/Vagrantfile
+"@ | Out-File -encoding 'ASCII' $vmdir/Vagrantfile
 
-	cd $root/t
+	cd $vmdir
 
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
 	wget -qN http://installer-bin.streambox.com/wget.exe
