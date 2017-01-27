@@ -75,6 +75,7 @@ function vagrant_up_with_without_autoproxy($vmname)
 
 	cd $root
 	make -C win_settings installer=disable_auto_proxy.exe
+	copy-item $root/disable_auto_proxy.vbs $vmdir
 	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
 	if(test-path $vmdir/Vagrantfile){
 		vagrant destroy --force
@@ -85,9 +86,15 @@ cd c:\\vagrant
 ./disable_auto_proxy.exe /S
 SCRIPT
 
+`$script2 = <<-'SCRIPT2'
+cd c:\\vagrant
+wscript disable_auto_proxy.vbs
+SCRIPT2
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
-config.vm.provision "shell", inline: `$script
+#config.vm.provision "shell", inline: `$script
+config.vm.provision "shell", inline: `$script2
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
