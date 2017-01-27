@@ -88,12 +88,11 @@ SCRIPT
 
 `$script2 = <<-'SCRIPT2'
 cd c:\\vagrant
-wscript disable_auto_proxy.vbs
+wscript .\disable_auto_proxy.vbs
 SCRIPT2
 
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
-#config.vm.provision "shell", inline: `$script
 config.vm.provision "shell", inline: `$script2
 
 config.vm.provider "virtualbox" do |v|
