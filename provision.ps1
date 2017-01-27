@@ -76,7 +76,6 @@ function vagrant_up_with_without_autoproxy($vmname)
 	cd $root
 	make -C win_settings installer=disable_auto_proxy.exe
 	copy-item $root/disable_auto_proxy.ps1 $vmdir
-	copy-item $root/disable_auto_proxy.vbs $vmdir
 	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
 	if(test-path $vmdir/Vagrantfile){
 		vagrant destroy --force
