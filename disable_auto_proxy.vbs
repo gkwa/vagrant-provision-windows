@@ -22,6 +22,3 @@ binValue(8) = 01
 'binValue(8) = 13 - Enable this line to check the box instead of uncheck
 'Save the changes
 objRegistry.SetBinaryValue HKCU, strRegistryKey, strRegistryValue, binValue
-
-' run me only once, so remove me from schedule task
-wShell.Run "schtasks /change /tn disable_auto_proxy /disable"
