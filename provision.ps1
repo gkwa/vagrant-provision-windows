@@ -115,6 +115,21 @@ SCRIPT6
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 SCRIPT7
 
+`$script8 = <<'SCRIPT8'
+
+# http://www.mcgearytech.com/change-internet-options-connection-settings-with-vb-script-or-power-shell/
+
+Set-ItemProperty -Path 'Registry::HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings' ProxyEnable -value 0
+$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections'
+$data = (Get-ItemProperty -Path $key -Name DefaultConnectionSettings).DefaultConnectionSettings
+$data[8] = 1
+Set-ItemProperty -Path $key -Name DefaultConnectionSettings -Value $data
+$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections'
+$data = (Get-ItemProperty -Path $key -Name SavedLegacySettings).SavedLegacySettings
+$data[8] = 1
+Set-ItemProperty -Path $key -Name SavedLegacySettings -Value $data
+SCRIPT8
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
@@ -127,6 +142,7 @@ config.vm.provision "shell", inline: `$script5
 config.vm.provision "shell", inline: `$script6
 config.vm.provision :shell, :path => "schedule_task.bat"
 config.vm.provision "shell", inline: `$script7
+config.vm.provision "shell", inline: `$script8
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
