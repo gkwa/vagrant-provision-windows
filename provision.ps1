@@ -154,21 +154,27 @@ SCRIPT8
 
 `$script9 = <<'SCRIPT9'
 cd c:/vagrant
-if (test-path Alias:wget) {Remove-Item Alias:\wget}
-wget -N --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
-wget -N --no-check-certificate https://certs.godaddy.com/repository/gdicsg2.cer
-wget -N --no-check-certificate https://chocolatey.org/install.ps1
-wget -N --no-check-certificate https://certs.godaddy.com/repository/gdroot-g2.crt
+
+if (test-path Alias:wget) {
+	Remove-Item Alias:\wget
+}
+
+wget --quiet --timestamping --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
+wget --quiet --timestamping --no-check-certificate https://certs.godaddy.com/repository/gdicsg2.cer
+wget --quiet --timestamping  --no-check-certificate https://chocolatey.org/install.ps1
+wget --quiet --timestamping --no-check-certificate https://certs.godaddy.com/repository/gdroot-g2.crt
+
 certutil -addstore -f "TrustedPublisher" c:/vagrant/gdroot-g2.crt
 certutil -addstore -f "TrustedPublisher" c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
 certutil -addstore -f "Root" c:/vagrant/gdroot-g2.crt
 certutil -addstore -f "Root" c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
 
-$env:chocolateyProxyLocation="http://localhost"
-$env:chocolateyProxyLocation="localhost:8888"
-$env:chocolateyProxyLocation="10.0.2.1"
-$env:chocolateyProxyLocation="http://localhost:8888"
-$env:chocolateyProxyLocation=""
+Set-Item -Path env:chocolateyProxyLocation -value "http://localhost"
+Set-Item -Path env:chocolateyProxyLocation -value "localhost:8888"
+Set-Item -Path env:chocolateyProxyLocation -value "10.0.2.1"
+Set-Item -Path env:chocolateyProxyLocation -value "http://localhost:8888"
+Set-Item -Path env:chocolateyProxyLocation -value ""
+
 . ./install.ps1
 SCRIPT9
 
