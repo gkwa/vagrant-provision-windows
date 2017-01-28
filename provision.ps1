@@ -93,9 +93,7 @@ SCRIPT2
 
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
-config.vm.provision privileged: true
-
-config.vm.provision :shell, :path => "disable_auto_proxy.ps1", :powershell_elevated_interactive => true
+config.vm.provision "shell", path: "disable_auto_proxy.ps1", privileged: true
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
