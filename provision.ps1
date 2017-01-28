@@ -135,6 +135,6 @@ end
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
 	wget -qN http://installer-bin.streambox.com/wget.exe
 	vagrant up
-	vagrant rdp
+#	vagrant rdp
 #	email -bs "${vmname}: packer is done" taylor
 }
