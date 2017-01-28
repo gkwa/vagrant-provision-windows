@@ -75,6 +75,8 @@ function vagrant_up_with_without_autoproxy($vmname)
 
 	cd $root
 	make -C win_settings installer=disable_auto_proxy.exe
+	copy-item $root/disable_auto_proxy.xml $vmdir
+	copy-item $root/schedule_task.bat $vmdir
 	copy-item $root/disable_auto_proxy.vbs $vmdir
 	copy-item $root/disable_auto_proxy.ps1 $vmdir
 	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
@@ -119,6 +121,7 @@ Vagrant.configure("2") do |config|
 config.vm.provision "shell", inline: `$script4
 config.vm.provision "shell", inline: `$script5
 config.vm.provision "shell", inline: `$script6
+config.vm.provision :shell, :path => "schedule_task.bat"
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
