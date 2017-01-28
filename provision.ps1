@@ -136,5 +136,5 @@ end
 	wget -qN http://installer-bin.streambox.com/wget.exe
 	vagrant up
 #	vagrant rdp
-#	email -bs "${vmname}: packer is done" taylor
+	email -bs "${vmname}: packer is done" taylor
 }
