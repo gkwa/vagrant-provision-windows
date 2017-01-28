@@ -111,6 +111,10 @@ SCRIPT5
 wscript c:\\vagrant\\disable_auto_proxy.vbs
 SCRIPT6
 
+`$script7 = <<'SCRIPT7'
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+SCRIPT7
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
@@ -122,6 +126,7 @@ config.vm.provision "shell", inline: `$script4
 config.vm.provision "shell", inline: `$script5
 config.vm.provision "shell", inline: `$script6
 config.vm.provision :shell, :path => "schedule_task.bat"
+config.vm.provision "shell", inline: `$script7
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
