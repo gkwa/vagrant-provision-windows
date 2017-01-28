@@ -80,6 +80,7 @@ function vagrant_up_with_without_autoproxy($vmname)
 	if(test-path $vmdir/Vagrantfile){
 		vagrant destroy --force
 	}
+
 	@"
 `$script = <<-'SCRIPT'
 cd c:\\vagrant
@@ -96,36 +97,7 @@ echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'
 SCRIPT3
 
 `$script4 = <<'SCRIPT4'
-
-@"
-
-'http://www.htguk.com/disabling-internet-explorer/
-
-Option Explicit
-On Error Resume Next
-'Create a constant for the HKEY_CURRENT_USER object
-Const HKCU = &H80000001
-'Define variables
-Dim strComputer
-Dim strRegistryKey
-Dim objRegistry
-Dim strRegistryValue
-Dim binValue
-strComputer = "."
-strRegistryKey = "Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections"
-strRegistryValue = "DefaultConnectionSettings"
-'Connect to the Registry
-Set objRegistry = GetObject("winmgmts:\\" & strComputer & "\root\default:StdRegProv")
-'Retrieve the current settings.
-objRegistry.GetBinaryValue HKCU, strRegistryKey, strRegistryValue, binValue
-'Change the 'Automatically detect settings' box to unticked
-binValue(8) = 01
-'binValue(8) = 13 - Enable this line to check the box instead of uncheck
-'Save the changes
-objRegistry.SetBinaryValue HKCU, strRegistryKey, strRegistryValue, binValue
-
-"@ | Out-File -encoding 'ASCII' disable_auto_proxy.vbs
-
+echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'
 SCRIPT4
 
 Vagrant.configure("2") do |config|
@@ -134,6 +106,12 @@ Vagrant.configure("2") do |config|
 # config.vm.provision :shell, :path => "disable_auto_proxy.ps1"
 # config.vm.provision "not running" OR "not being run" powershell
 # config.vm.provision "shell", inline: `$script3
+
+config.vm.provision :file do |file|
+  file.source = "disable_auto_proxy.ps1"
+  file.destination = "c:\\vagrant\\disable_auto_proxy.ps1"
+end
+
 config.vm.provision "shell", inline: `$script4
 
 config.vm.provider "virtualbox" do |v|
