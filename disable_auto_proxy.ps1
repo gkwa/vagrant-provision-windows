@@ -27,4 +27,4 @@ objRegistry.SetBinaryValue HKCU, strRegistryKey, strRegistryValue, binValue
 
 "@ | Out-File -encoding 'ASCII' disable_auto_proxy.vbs
 
-wscript disable_auto_proxy.vbs
+cmd /c wscript disable_auto_proxy.vbs
