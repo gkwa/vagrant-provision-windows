@@ -207,6 +207,6 @@ end
 		packer_build $vmname
 	}
 	vagrant up
-	vagrant rdp
+#	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
 }
