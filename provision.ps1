@@ -111,11 +111,6 @@ Vagrant.configure("2") do |config|
 # config.vm.provision "not running" OR "not being run" powershell
 # config.vm.provision "shell", inline: `$script3
 
-config.vm.provision :file do |file|
-  file.source = "disable_auto_proxy.vbs"
-  file.destination = "c:\\vagrant\\disable_auto_proxy.vbs"
-end
-
 config.vm.provision "shell", inline: `$script4
 config.vm.provision "shell", inline: `$script5
 
