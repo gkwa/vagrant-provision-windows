@@ -100,6 +100,10 @@ SCRIPT3
 echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'
 SCRIPT4
 
+`$script5 = <<'SCRIPT5'
+wscript c:\\vagrant\\disable_auto_proxy.vbs
+SCRIPT5
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
@@ -108,11 +112,12 @@ Vagrant.configure("2") do |config|
 # config.vm.provision "shell", inline: `$script3
 
 config.vm.provision :file do |file|
-  file.source = "disable_auto_proxy.ps1"
-  file.destination = "c:\\vagrant\\disable_auto_proxy.ps1"
+  file.source = "disable_auto_proxy.vbs"
+  file.destination = "c:\\vagrant\\disable_auto_proxy.vbs"
 end
 
 config.vm.provision "shell", inline: `$script4
+config.vm.provision "shell", inline: `$script5
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
