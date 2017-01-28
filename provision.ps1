@@ -4,7 +4,7 @@
 
 $vmname='eval-win10x64-enterprise'
 packer_build $vmname
-vagrant destroy --force; . $root/provision.ps1; vagrant_up_with_without_autoproxy $vmname
+vagrant destroy --force; . $root/provision.ps1; vup $vmname
 
 #>
 
@@ -83,7 +83,7 @@ function box_exists_already( $vmname )
 	$boxlist -contains $vmname
 }
 
-function vagrant_up_with_without_autoproxy($vmname)
+function vup($vmname)
 {
 	cd $root
 	cleanup $vmname

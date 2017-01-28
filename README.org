@@ -22,5 +22,5 @@ packer_build $vmname
 # or
 packer_rebuild $vmname
 # then
-vagrant_up_with_without_autoproxy $vmname
+vup $vmname
 #+END_SRC
