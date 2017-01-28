@@ -1,3 +1,13 @@
+<# 
+
+# usage example:
+
+$vmname='eval-win10x64-enterprise'
+packer_build $vmname
+vagrant destroy --force; . $root/provision.ps1; vagrant_up_with_without_autoproxy $vmname
+
+#>
+
 if (!(Get-Variable vmname -Scope Global -ErrorAction SilentlyContinue)){
 	Write-Host '$vmname not defined, set it and run again (eg $vmname="eval-win7x64-enterprise")'
 	Exit 1
@@ -144,7 +154,7 @@ SCRIPT8
 
 `$script9 = <<'SCRIPT9'
 cd c:/vagrant
-Remove-item Alias:\wget
+if (test-path Alias:wget) {Remove-Item Alias:\wget}
 wget -N --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
 wget -N --no-check-certificate https://certs.godaddy.com/repository/gdicsg2.cer
 wget -N --no-check-certificate https://chocolatey.org/install.ps1
