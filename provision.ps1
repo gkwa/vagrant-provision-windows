@@ -38,7 +38,7 @@ function cleanup( $vmname ){
 	deletevms
 	deletevms
 	deletevms
-	stop-process -ea SilentlyContinue -processname VBoxSVC
+#	stop-process -ea SilentlyContinue -processname VBoxSVC
 	if(test-path D:/vbox/$vmname){
 		remove-item -force -recurse D:/vbox/$vmname
 	}
