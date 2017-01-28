@@ -93,7 +93,7 @@ SCRIPT2
 
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
-config.vm.provision :shell, path: "disable_auto_proxy.ps1"
+config.vm.provision "shell", path: "disable_auto_proxy.ps1"
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
