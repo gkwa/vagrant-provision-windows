@@ -130,6 +130,26 @@ $data[8] = 1
 Set-ItemProperty -Path $key -Name SavedLegacySettings -Value $data
 SCRIPT8
 
+
+`$script9 = <<'SCRIPT9'
+cd c:/vagrant
+wget -N --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
+wget -N --no-check-certificate https://certs.godaddy.com/repository/gdicsg2.cer
+wget -N --no-check-certificate https://chocolatey.org/install.ps1
+wget -N --no-check-certificate https://certs.godaddy.com/repository/gdroot-g2.crt
+certutil -addstore -f "TrustedPublisher" c:/vagrant/gdroot-g2.crt
+certutil -addstore -f "TrustedPublisher" c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
+certutil -addstore -f "Root" c:/vagrant/gdroot-g2.crt
+certutil -addstore -f "Root" c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
+
+$env:chocolateyProxyLocation="http://localhost"
+$env:chocolateyProxyLocation="localhost:8888"
+$env:chocolateyProxyLocation="10.0.2.1"
+$env:chocolateyProxyLocation="http://localhost:8888"
+$env:chocolateyProxyLocation=""
+. ./install.ps1
+SCRIPT9
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
@@ -142,6 +162,7 @@ Vagrant.configure("2") do |config|
 # config.vm.provision :shell, :path => "schedule_task.bat"
 # config.vm.provision "shell", inline: `$script7
 # config.vm.provision "shell", inline: `$script8
+config.vm.provision "shell", inline: `$script9
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
