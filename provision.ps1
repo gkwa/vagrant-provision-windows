@@ -92,7 +92,7 @@ wscript ./disable_auto_proxy.vbs
 SCRIPT2
 
 `$script3 = <<'SCRIPT3'
-powershell -executionpolicy bypass -command "echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'" -username 'vagrant' -password 'vagrant' -execution_time_limit 'PT2H'
+echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'
 SCRIPT3
 
 Vagrant.configure("2") do |config|
