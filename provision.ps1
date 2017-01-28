@@ -91,9 +91,18 @@ cd c:\\vagrant
 wscript ./disable_auto_proxy.vbs
 SCRIPT2
 
+`$script3 = <<'SCRIPT3'
+@"
+hello
+"@	| Out-File -encoding 'ASCII' C:\\Windows\\Temp\\out.txt
+SCRIPT3
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
-config.vm.provision :shell, :path => "disable_auto_proxy.ps1"
+
+# config.vm.provision :shell, :path => "disable_auto_proxy.ps1"
+# config.vm.provision "not running" OR "not being run" powershell
+config.vm.provision "shell", inline: `$script3
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
