@@ -62,6 +62,17 @@ function packer_rebuild( $vmname )
 	cd "$d"
 }
 
+function box_exists_already( $vmname )
+{
+	$boxlist=vagrant box list --no-color | 
+	  Select-String '^([^(]*)' -AllMatches | 
+	  Foreach-Object { $_.Matches } | 
+	  Foreach-Object { $_.Groups[1].Value } | 
+	  Foreach-Object { $_.Trim() }
+
+	$boxlist -contains $vmname
+}
+
 function vagrant_up_with_without_autoproxy($vmname)
 {
 	cd $root
@@ -175,6 +186,9 @@ end
 
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
 	wget -qN http://installer-bin.streambox.com/wget.exe
+	if(!(box_exists_already $vmname)){
+		packer_build $vmname
+	}
 	vagrant up
 	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
