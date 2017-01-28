@@ -155,8 +155,8 @@ SCRIPT8
 `$script9 = <<'SCRIPT9'
 cd c:/vagrant
 
-if (test-path Alias:wget) {
-	Remove-Item Alias:\wget
+if (test-path Alias:\wget) {
+	Remove-Item -Force -Path Alias:\wget
 }
 
 wget --quiet --timestamping --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
