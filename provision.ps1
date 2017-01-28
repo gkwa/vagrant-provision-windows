@@ -144,7 +144,7 @@ SCRIPT8
 
 `$script9 = <<'SCRIPT9'
 cd c:/vagrant
-Remove-item alias:wget
+Remove-item Alias:\wget
 wget -N --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
 wget -N --no-check-certificate https://certs.godaddy.com/repository/gdicsg2.cer
 wget -N --no-check-certificate https://chocolatey.org/install.ps1
