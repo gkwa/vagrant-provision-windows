@@ -1,5 +1,7 @@
 @"
 
+sleep -s 20
+
 'http://www.htguk.com/disabling-internet-explorer/
 
 Option Explicit
