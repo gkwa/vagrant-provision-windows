@@ -94,7 +94,7 @@ SCRIPT2
 `$script3 = <<'SCRIPT3'
 @"
 hello
-"@	| Out-File -encoding 'ASCII' C:\\Windows\\Temp\\out.txt
+"@ | Out-File -encoding 'ASCII' C:\\Windows\\Temp\\out.txt
 SCRIPT3
 
 Vagrant.configure("2") do |config|
