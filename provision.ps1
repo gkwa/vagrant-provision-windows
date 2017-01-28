@@ -161,13 +161,13 @@ if (test-path Alias:\wget) {
 
 wget --quiet --timestamping --no-check-certificate https://ssl-tools.net/certificates/02faf3e291435468607857694df5e45b68851868.pem
 wget --quiet --timestamping --no-check-certificate https://certs.godaddy.com/repository/gdicsg2.cer
-wget --quiet --timestamping  --no-check-certificate https://chocolatey.org/install.ps1
+wget --quiet --timestamping --no-check-certificate https://chocolatey.org/install.ps1
 wget --quiet --timestamping --no-check-certificate https://certs.godaddy.com/repository/gdroot-g2.crt
 
-certutil -addstore -f "TrustedPublisher" c:/vagrant/gdroot-g2.crt
-certutil -addstore -f "TrustedPublisher" c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
-certutil -addstore -f "Root" c:/vagrant/gdroot-g2.crt
-certutil -addstore -f "Root" c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
+certutil -addstore -f TrustedPublisher c:/vagrant/gdroot-g2.crt
+certutil -addstore -f TrustedPublisher c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
+certutil -addstore -f Root c:/vagrant/gdroot-g2.crt
+certutil -addstore -f Root c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
 
 Set-Item -Path env:chocolateyProxyLocation -value "http://localhost"
 Set-Item -Path env:chocolateyProxyLocation -value "localhost:8888"
