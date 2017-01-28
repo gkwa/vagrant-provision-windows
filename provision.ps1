@@ -136,12 +136,11 @@ Vagrant.configure("2") do |config|
 # config.vm.provision :shell, :path => "disable_auto_proxy.ps1"
 # config.vm.provision "not running" OR "not being run" powershell
 # config.vm.provision "shell", inline: `$script3
-
-config.vm.provision "shell", inline: `$script4
-config.vm.provision "shell", inline: `$script5
-config.vm.provision "shell", inline: `$script6
-config.vm.provision :shell, :path => "schedule_task.bat"
-config.vm.provision "shell", inline: `$script7
+# config.vm.provision "shell", inline: `$script4
+# config.vm.provision "shell", inline: `$script5
+# config.vm.provision "shell", inline: `$script6
+# config.vm.provision :shell, :path => "schedule_task.bat"
+# config.vm.provision "shell", inline: `$script7
 config.vm.provision "shell", inline: `$script8
 
 config.vm.provider "virtualbox" do |v|
