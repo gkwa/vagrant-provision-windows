@@ -105,6 +105,10 @@ SCRIPT4
 wscript c:\\vagrant\\disable_auto_proxy.vbs
 SCRIPT5
 
+`$script6 = <<'SCRIPT6'
+wscript c:\\vagrant\\disable_auto_proxy.vbs
+SCRIPT6
+
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
@@ -114,6 +118,7 @@ Vagrant.configure("2") do |config|
 
 config.vm.provision "shell", inline: `$script4
 config.vm.provision "shell", inline: `$script5
+config.vm.provision "shell", inline: `$script6
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
