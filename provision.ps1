@@ -141,7 +141,7 @@ Vagrant.configure("2") do |config|
 # config.vm.provision "shell", inline: `$script6
 # config.vm.provision :shell, :path => "schedule_task.bat"
 # config.vm.provision "shell", inline: `$script7
-config.vm.provision "shell", inline: `$script8
+# config.vm.provision "shell", inline: `$script8
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
