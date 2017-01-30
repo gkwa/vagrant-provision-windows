@@ -190,6 +190,8 @@ end
 
 function listHandles($vmname, $handle_out)
 {
+	$regex='^(.*)\s+pid: (\d+)\s+type: ([^ ]+)\s+([A-Fa-f0-9]+): (.*)'
+
 	foreach( $line in $handle_out ) {
 		$line | Select-String $regex -AllMatches |
 		  Foreach-Object { $_.Matches } |
