@@ -38,7 +38,6 @@ function cleanup( $vmname ){
 	deletevms
 	deletevms
 	deletevms
-#	stop-process -ea SilentlyContinue -processname VBoxSVC
 	if(test-path D:/vbox/$vmname){
 		remove-item -force -recurse D:/vbox/$vmname
 	}
@@ -81,6 +80,18 @@ function box_exists_already( $vmname )
 	  Foreach-Object { $_.Trim() }
 
 	$boxlist -contains $vmname
+}
+
+function vmdestroy( $vmname )
+{
+ 	vagrant destroy --force
+	handle $vmname
+
+$boxlist=vagrant box list --no-color | 
+	Select-String '^([^(]*)' -AllMatches | 
+	Foreach-Object {$_.Matches} | 
+	Foreach-Object {$_.Groups[1].Value} | 
+	Foreach-Object {$_.Trim()}
 }
 
 function vup($vmname)
