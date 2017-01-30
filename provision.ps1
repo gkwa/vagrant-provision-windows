@@ -137,10 +137,6 @@ certutil -addstore -f TrustedPublisher c:/vagrant/02faf3e291435468607857694df5e4
 certutil -addstore -f Root c:/vagrant/gdroot-g2.crt
 certutil -addstore -f Root c:/vagrant/02faf3e291435468607857694df5e45b68851868.pem
 
-Set-Item -Path env:chocolateyProxyLocation -value "http://localhost"
-Set-Item -Path env:chocolateyProxyLocation -value "localhost:8888"
-Set-Item -Path env:chocolateyProxyLocation -value "10.0.2.1"
-Set-Item -Path env:chocolateyProxyLocation -value "http://localhost:8888"
 Set-Item -Path env:chocolateyProxyLocation -value ""
 
 . ./install.ps1
