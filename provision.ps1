@@ -94,47 +94,6 @@ function vmdestroy( $vmname )
 function create_vagrantfile( $vmname, $vmdir )
 {
 	@"
-`$script2 = <<SCRIPT2
-cd c:\\vagrant
-wscript ./disable_auto_proxy.vbs
-SCRIPT2
-
-`$script3 = <<'SCRIPT3'
-echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'
-SCRIPT3
-
-`$script4 = <<'SCRIPT4'
-echo 1 | Out-File -encoding 'ASCII' 'C:\Windows\Temp\out.txt'
-SCRIPT4
-
-`$script5 = <<'SCRIPT5'
-wscript c:\\vagrant\\disable_auto_proxy.vbs
-SCRIPT5
-
-`$script6 = <<'SCRIPT6'
-wscript c:\\vagrant\\disable_auto_proxy.vbs
-SCRIPT6
-
-`$script7 = <<'SCRIPT7'
-iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-SCRIPT7
-
-`$script8 = <<'SCRIPT8'
-
-# http://www.mcgearytech.com/change-internet-options-connection-settings-with-vb-script-or-power-shell/
-
-Set-ItemProperty -Path 'Registry::HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings' ProxyEnable -value 0
-$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections'
-$data = (Get-ItemProperty -Path $key -Name DefaultConnectionSettings).DefaultConnectionSettings
-$data[8] = 1
-Set-ItemProperty -Path $key -Name DefaultConnectionSettings -Value $data
-$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\Connections'
-$data = (Get-ItemProperty -Path $key -Name SavedLegacySettings).SavedLegacySettings
-$data[8] = 1
-Set-ItemProperty -Path $key -Name SavedLegacySettings -Value $data
-SCRIPT8
-
-
 `$script9 = <<'SCRIPT9'
 cd c:/vagrant
 
@@ -164,15 +123,6 @@ SCRIPT9
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
-# config.vm.provision :shell, :path => "disable_auto_proxy.ps1"
-# config.vm.provision "not running" OR "not being run" powershell
-# config.vm.provision "shell", inline: `$script3
-# config.vm.provision "shell", inline: `$script4
-# config.vm.provision "shell", inline: `$script5
-# config.vm.provision "shell", inline: `$script6
-# config.vm.provision :shell, :path => "schedule_task.bat"
-# config.vm.provision "shell", inline: `$script7
-# config.vm.provision "shell", inline: `$script8
 config.vm.provision "shell", inline: `$script9
 
 config.vm.provider "virtualbox" do |v|
@@ -214,10 +164,6 @@ function vup($vmname)
 	mkdir -force $vmdir | out-null
 
 	cd $root
-	copy-item $root/disable_auto_proxy.xml $vmdir
-	copy-item $root/schedule_task.bat $vmdir
-	copy-item $root/disable_auto_proxy.vbs $vmdir
-	copy-item $root/disable_auto_proxy.ps1 $vmdir
 	if(test-path $vmdir/Vagrantfile){
 		vagrant destroy --force
 	}
