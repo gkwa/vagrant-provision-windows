@@ -179,4 +179,5 @@ function vup($vmname)
 	vagrant up
 	#	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
+	vagrant destroy --force
 }
