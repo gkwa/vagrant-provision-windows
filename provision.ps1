@@ -49,10 +49,6 @@ function cleanup( $vmname ){
 	}
 }
 
-function cleanup2(){
-	vagrant destroy --force
-}
-
 function packer_build( $vmname )
 {
 	$d=$pwd
@@ -87,35 +83,16 @@ function vmdestroy( $vmname )
  	vagrant destroy --force
 	handle $vmname
 
-$boxlist=vagrant box list --no-color | 
-	Select-String '^([^(]*)' -AllMatches | 
-	Foreach-Object {$_.Matches} | 
-	Foreach-Object {$_.Groups[1].Value} | 
-	Foreach-Object {$_.Trim()}
+	$boxlist=vagrant box list --no-color | 
+	  Select-String '^([^(]*)' -AllMatches | 
+	  Foreach-Object {$_.Matches} | 
+	  Foreach-Object {$_.Groups[1].Value} | 
+	  Foreach-Object {$_.Trim()}
 }
 
-function vup($vmname)
+
+function create_vagrantfile( $vmname, $vmdir )
 {
-	cd $root
-	cleanup $vmname
-
-	# instantiate new test instance
-	cd $root
-	$vmdir = "$root/$vmname"
-	remove-item -ea 0 -recurse $vmdir
-	mkdir -force $vmdir | out-null
-
-	cd $root
-	make -C win_settings installer=disable_auto_proxy.exe
-	copy-item $root/disable_auto_proxy.xml $vmdir
-	copy-item $root/schedule_task.bat $vmdir
-	copy-item $root/disable_auto_proxy.vbs $vmdir
-	copy-item $root/disable_auto_proxy.ps1 $vmdir
-	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
-	if(test-path $vmdir/Vagrantfile){
-		vagrant destroy --force
-	}
-
 	@"
 `$script = <<-'SCRIPT'
 cd c:\\vagrant
@@ -209,7 +186,48 @@ v.cpus = 2
 end
 end
 "@ | Out-File -encoding 'ASCII' $vmdir/Vagrantfile
+}
 
+function listHandles($vmname, $handle_out)
+{
+	foreach( $line in $handle_out ) {
+		$line | Select-String $regex -AllMatches |
+		  Foreach-Object { $_.Matches } |
+		  Foreach-Object {
+			  $pname=$_.Groups[1].Value.Trim()
+			  $_pid=$_.Groups[2].Value.Trim()
+			  $fpath=$_.Groups[5].Value.Trim()
+			  "{0} {1} {2} {3}" -f $_pid, [System.IO.Path]::GetExtension($fpath), $pname, $fpath
+			  "taskkill /F /pid $_pid"
+		  }
+	}
+}
+
+function vup($vmname)
+{
+	cd $root
+	$handle_out = handle $vmname
+	listHandles $vmname $handle_out
+	cleanup $vmname
+
+	# instantiate new test instance
+	cd $root
+	$vmdir = "$root/$vmname"
+	remove-item -ea 0 -recurse $vmdir
+	mkdir -force $vmdir | out-null
+
+	cd $root
+	make -C win_settings installer=disable_auto_proxy.exe
+	copy-item $root/disable_auto_proxy.xml $vmdir
+	copy-item $root/schedule_task.bat $vmdir
+	copy-item $root/disable_auto_proxy.vbs $vmdir
+	copy-item $root/disable_auto_proxy.ps1 $vmdir
+	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
+	if(test-path $vmdir/Vagrantfile){
+		vagrant destroy --force
+	}
+
+	create_vagrant_file $vmname $vmdir
 	cd $vmdir
 
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
@@ -218,6 +236,6 @@ end
 		packer_build $vmname
 	}
 	vagrant up
-#	vagrant rdp
+	#	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
 }
