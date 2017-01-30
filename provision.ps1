@@ -10,7 +10,6 @@ vagrant destroy --force; . $root/provision.ps1; vup $vmname
 
 if (!(Get-Variable vmname -Scope Global -ErrorAction SilentlyContinue)){
 	Write-Host '$vmname not defined, set it and run again (eg $vmname="eval-win7x64-enterprise")'
-	Exit 1
 }
 
 if (!(Get-Variable root -Scope Global -ErrorAction SilentlyContinue)) {
