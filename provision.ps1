@@ -94,11 +94,6 @@ function vmdestroy( $vmname )
 function create_vagrantfile( $vmname, $vmdir )
 {
 	@"
-`$script = <<-'SCRIPT'
-cd c:\\vagrant
-./disable_auto_proxy.exe /S
-SCRIPT
-
 `$script2 = <<SCRIPT2
 cd c:\\vagrant
 wscript ./disable_auto_proxy.vbs
@@ -219,12 +214,10 @@ function vup($vmname)
 	mkdir -force $vmdir | out-null
 
 	cd $root
-	make -C win_settings installer=disable_auto_proxy.exe
 	copy-item $root/disable_auto_proxy.xml $vmdir
 	copy-item $root/schedule_task.bat $vmdir
 	copy-item $root/disable_auto_proxy.vbs $vmdir
 	copy-item $root/disable_auto_proxy.ps1 $vmdir
-	copy-item $root/win_settings/disable_auto_proxy.exe $vmdir
 	if(test-path $vmdir/Vagrantfile){
 		vagrant destroy --force
 	}

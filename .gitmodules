@@ -1,6 +1,3 @@
-[submodule "win_settings"]
-	path = win_settings
-	url = https://github.com/taylormonacelli/win_settings
 [submodule "boxcutter-windows"]
 	path = boxcutter-windows
 	url = https://github.com/taylormonacelli/boxcutter-windows
