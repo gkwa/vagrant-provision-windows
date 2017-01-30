@@ -148,6 +148,7 @@ config.vm.provision "shell", inline: `$script9
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
 v.cpus = 2
+v.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
 end
 end
 "@ | Out-File -encoding 'ASCII' $vmdir/Vagrantfile
