@@ -26,28 +26,26 @@ if(test-path Alias:\wget){
 
 function redoAll()
 {
-	$vmname="eval-win10x64-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win10x86-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win2008r2-datacenter"; vagrant box remove --force $vmname
-	$vmname="eval-win2008r2-standard"; vagrant box remove --force $vmname
-	$vmname="eval-win2012r2-datacenter"; vagrant box remove --force $vmname
-	$vmname="eval-win2012r2-standard"; vagrant box remove --force $vmname
-	$vmname="eval-win7x64-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win7x86-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win81x64-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win81x86-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win8x64-enterprise"; vagrant box remove --force $vmname
-	$vmname="eval-win10x64-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win10x86-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win2008r2-datacenter"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win2008r2-standard"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win2012r2-datacenter"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win2012r2-standard"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win7x64-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win7x86-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win81x64-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win81x86-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
-	$vmname="eval-win8x64-enterprise"; . $root/provision.ps1; vup $vmname; vagrant destroy --force
+	$vmlist=@(
+		'eval-win10x64-enterprise',
+		'eval-win10x86-enterprise',
+		'eval-win2008r2-datacenter',
+		'eval-win2008r2-standard',
+		'eval-win2012r2-datacenter',
+		'eval-win2012r2-standard',
+		'eval-win7x64-enterprise',
+		'eval-win7x86-enterprise',
+		'eval-win81x64-enterprise',
+		'eval-win81x86-enterprise',
+		'eval-win8x64-enterprise'
+	);
+
+	. $root/provision.ps1
+	foreach ($vmname in $vmlist) {
+		vagrant box remove --force $vmname
+		vup $vmname
+		vagrant destroy --force
+	}
 }
 
 function deletevms(){
