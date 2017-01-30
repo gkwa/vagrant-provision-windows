@@ -229,7 +229,7 @@ function vup($vmname)
 		vagrant destroy --force
 	}
 
-	create_vagrant_file $vmname $vmdir
+	create_vagrantfile $vmname $vmdir
 	cd $vmdir
 
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
