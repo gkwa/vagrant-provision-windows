@@ -196,7 +196,14 @@ function vup($vmname)
 	if(!(box_exists_already $vmname)){
 		packer_build $vmname
 	}
-	vagrant up
+	vagrant up --no-destroy-on-error --no-provision
+	$tries=1;
+	do {
+		# try again, it seems to work the second time, dunno why
+		# I exepect vagrant >1.9.1 will fix this
+		# https://github.com/mitchellh/vagrant/issues/7717
+		vagrant provision
+	} while($lastExitCode -ne 0 -and $tries++ -le 3)
 	#	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
 }
