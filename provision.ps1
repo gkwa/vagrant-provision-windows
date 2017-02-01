@@ -118,6 +118,9 @@ function create_vagrantfile( $vmname, $vmdir )
 {
 	@"
 `$script9 = <<'SCRIPT9'
+
+sleep -s 20
+
 cd c:/vagrant
 
 if (test-path Alias:\wget) {
