@@ -2,6 +2,7 @@
 
 # usage example:
 
+$env:HEADLESS='true'
 $vmname='eval-win10x64-enterprise'
 packer_build $vmname
 vagrant destroy --force; . $root/provision.ps1; vup $vmname
