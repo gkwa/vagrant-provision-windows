@@ -149,6 +149,7 @@ config.vm.provider "virtualbox" do |v|
   v.memory = 4024
 v.cpus = 2
 v.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
+v.customize ["modifyvm", :id, "--vcpenabled", "on"]
 end
 end
 "@ | Out-File -encoding 'ASCII' $vmdir/Vagrantfile
