@@ -13,14 +13,14 @@ Install-BoxstarterPackage -Force MyUpdate
 
 try {
 
-	cinst --yes --ignore-checksums vim
-
 	# Boxstarter options
 	$Boxstarter.RebootOk=$true # Allow reboots?
 	$Boxstarter.NoPassword=$false # Is this a machine with no login password?
 	$Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a reboot
 
 	$toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+
+	cinst --yes --ignore-checksums vim
 
 	# Basic setup
 	Update-ExecutionPolicy RemoteSigned
