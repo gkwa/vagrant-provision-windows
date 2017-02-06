@@ -126,11 +126,9 @@ cinst --yes boxstarter
 
 
 
-# 	-NoNewWindow:$false `
-Install-BoxstarterPackage `
-	-Force `
-	-KeepWindowOpen:$false `
-	https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
+# 	-KeepWindowOpen:$false
+# 	-NoNewWindow:$false
+Install-BoxstarterPackage -Force https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
 '@ | Out-File -encoding 'ASCII' $vmdir/update2.ps1
 
 }
