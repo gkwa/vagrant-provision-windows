@@ -168,9 +168,7 @@ config.vm.provision "bootstrap", type: "shell" do |s|
     s.inline = `$script9
 end
 
-config.vm.provision "boxstarter", type: "shell" do |s|
-    s.inline = 'update2.ps1'
-end
+config.vm.provision "boxstarter", type: "shell", path: "update2.ps1"
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
