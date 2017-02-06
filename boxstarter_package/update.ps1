@@ -38,7 +38,6 @@ try {
 	}
 
 } catch {
-
 	Write-Host "DEBUG $($_.Exception.Message)"
 	if ($($_.Exception.Message) -like '*E_OUTOFMEMORY*') {
 		# shutdown -r has been disabled by boxstarter
