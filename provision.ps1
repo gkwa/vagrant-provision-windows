@@ -124,8 +124,6 @@ Install-ChocolateyPinnedTaskBarItem -TargetFilePath C:\Windows\system32\WindowsP
 cinst --yes boxstarter
 . "$env:appdata\Boxstarter\BoxstarterShell.ps1"
 
-
-
 # 	-KeepWindowOpen:$false
 # 	-NoNewWindow:$false
 Install-BoxstarterPackage -Force https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
@@ -162,13 +160,8 @@ SCRIPT9
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
-config.vm.provision "bootstrap", type: "shell" do |s|
-    s.inline = `$script9
-end
-
-config.vm.provision "boxstarter", type: "shell" do |s|
-    s.path  = "update2.ps1"
-end
+config.vm.provision "bootstrap", type: "shell", inline: `$script9
+config.vm.provision "boxstarter", type: "shell", path: "update2.ps1"
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
