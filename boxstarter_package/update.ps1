@@ -12,6 +12,8 @@ Install-BoxstarterPackage https://raw.githubusercontent.com/TaylorMonacelli/wind
 
 try {
 
+	cinst install --yes --allow-empty-checksums vim
+
 	# Boxstarter options
 	$Boxstarter.RebootOk=$true # Allow reboots?
 	$Boxstarter.NoPassword=$false # Is this a machine with no login password?
