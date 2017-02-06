@@ -4,7 +4,8 @@
 
 cinst --yes boxstarter
 . "$env:appdata\Boxstarter\BoxstarterShell.ps1"
-Install-BoxstarterPackage https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
+New-PackageFromScript update.ps1 MyUpdate
+Install-BoxstarterPackage -Force MyUpdate
 
 #>
 
@@ -23,7 +24,9 @@ try {
 
 	# Basic setup
 	Update-ExecutionPolicy RemoteSigned
-	Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
+	Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives `
+	  -EnableShowProtectedOSFiles -EnableShowFileExtensions `
+	  -EnableShowFullPathInTitleBar
 	#Enable-RemoteDesktop
 	Disable-InternetExplorerESC
 	Set-TaskbarOptions -Size Small -Lock -Dock Bottom -Combine Never
