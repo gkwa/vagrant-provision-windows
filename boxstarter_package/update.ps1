@@ -39,12 +39,9 @@ try {
 
 } catch {
 
-	Write-Host "taylordebug $($_.Exception.Message)"
+	Write-Host "DEBUG $($_.Exception.Message)"
 	if ($($_.Exception.Message) -like '*E_OUTOFMEMORY*') {
 		# shutdown -r has been disabled by boxstarter
  		Invoke-Reboot
 	}
-#	throw $_.Exception
-#	Write-ChocolateyFailure 'https://github.com/taylormonacelli/windows-update/update.ps1 failed' $($_.Exception.Message)
-#	throw
 }
