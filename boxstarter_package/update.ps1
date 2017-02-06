@@ -26,7 +26,7 @@ try {
 	Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
 	#Enable-RemoteDesktop
 	Disable-InternetExplorerESC
-	Set-TaskbarOptions -Size Large -Lock -Dock Bottom -Combine Always
+	Set-TaskbarOptions -Size Small -Lock -Dock Bottom -Combine Never
 
 	if (Test-PendingReboot) {
 		Invoke-Reboot
