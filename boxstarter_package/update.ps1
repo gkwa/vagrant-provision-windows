@@ -1,0 +1,47 @@
+# inspired from https://raw.githubusercontent.com/spoonypirate/BoxstarterPackages/master/lyx-boxstarter/tools/ChocolateyInstall.ps1
+
+<# usage
+
+cinst --yes boxstarter
+. "$env:appdata\Boxstarter\BoxstarterShell.ps1"
+Install-BoxstarterPackage https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
+
+#>
+
+# set-psdebug -Strict -Trace 1
+
+try {
+
+	# Boxstarter options
+	$Boxstarter.RebootOk=$true # Allow reboots?
+	$Boxstarter.NoPassword=$false # Is this a machine with no login password?
+	$Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a reboot
+
+	$toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+
+	# Basic setup
+	Update-ExecutionPolicy RemoteSigned
+	Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions -EnableShowFullPathInTitleBar
+	#Enable-RemoteDesktop
+	Disable-InternetExplorerESC
+	Set-TaskbarOptions -Size Large -Lock -Dock Bottom -Combine Always
+
+	if (Test-PendingReboot) {
+		Invoke-Reboot
+	}
+
+	Install-WindowsUpdate -AcceptEula
+	if (Test-PendingReboot) {
+		Invoke-Reboot
+	}
+
+} catch {
+    Write-Host $($_.Exception.Message)
+	if ($($_.Exception.Message) -like '*E_OUTOFMEMORY*') {
+	   shutdown /t 30 /c "Install-WindowsUpdate encountered E_OUTOFMEMORY" /r
+	}
+
+#	throw $_.Exception
+#	Write-ChocolateyFailure 'https://github.com/taylormonacelli/windows-update/update.ps1 failed' $($_.Exception.Message)
+#	throw
+}

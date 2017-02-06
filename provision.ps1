@@ -114,6 +114,12 @@ function vmdestroy( $vmname )
 	  Foreach-Object {$_.Trim()}
 }
 
+function setup_boxstarter_package( $vmname, $vmdir )
+{
+	mkdir -force $vmdir/boxstarter_package
+	Copy-Item $root/boxstarter_package/update.ps1 $vmdir/boxstarter_package/update.ps1
+}
+
 function create_boxstarter_update_file( $vmname, $vmdir )
 {
 @'
@@ -125,9 +131,9 @@ cinst --yes boxstarter
 
 # 	-KeepWindowOpen:$false
 # 	-NoNewWindow:$false
-Install-BoxstarterPackage -Force https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
+New-PackageFromScript c:\vagrant\boxstarter_package\update.ps1 MyUpdate
+Install-BoxstarterPackage -Force MyUpdate
 '@ | Out-File -encoding 'ASCII' $vmdir/update2.ps1
-
 }
 
 
@@ -218,6 +224,7 @@ function vup($vmname)
 
 	create_vagrantfile $vmname $vmdir
 	create_boxstarter_update_file $vmname $vmdir
+	setup_boxstarter_package $vmname $vmdir
 	cd $vmdir
 
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
