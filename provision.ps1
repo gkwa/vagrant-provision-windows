@@ -114,6 +114,27 @@ function vmdestroy( $vmname )
 	  Foreach-Object {$_.Trim()}
 }
 
+function create_boxstarter_update_file( $vmname, $vmdir )
+{
+@'
+
+Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
+Install-ChocolateyPinnedTaskBarItem -TargetFilePath C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe
+
+cinst --yes boxstarter
+. "$env:appdata\Boxstarter\BoxstarterShell.ps1"
+
+
+
+# 	-NoNewWindow:$false `
+Install-BoxstarterPackage `
+	-Force `
+	-KeepWindowOpen:$false `
+	https://raw.githubusercontent.com/TaylorMonacelli/windows-update/master/update.ps1
+'@ | Out-File -encoding 'ASCII' $vmdir/update2.ps1
+
+}
+
 
 function create_vagrantfile( $vmname, $vmdir )
 {
@@ -143,7 +164,13 @@ SCRIPT9
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
-config.vm.provision "shell", inline: `$script9
+config.vm.provision "bootstrap", type: "shell" do |s|
+    s.inline = `$script9
+end
+
+config.vm.provision "boxstarter", type: "shell" do |s|
+    s.inline = 'update2.ps1'
+end
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
@@ -191,6 +218,7 @@ function vup($vmname)
 	}
 
 	create_vagrantfile $vmname $vmdir
+	create_boxstarter_update_file $vmname $vmdir
 	cd $vmdir
 
 	# download wget.exe to host will make c:\vagrant\wget.exe available inside guest vm
@@ -204,7 +232,7 @@ function vup($vmname)
 		# try again, it seems to work the second time, dunno why
 		# I exepect vagrant >1.9.1 will fix this
 		# https://github.com/mitchellh/vagrant/issues/7717
-		vagrant provision
+		vagrant provision --provision-with bootstrap
 	} while($lastExitCode -ne 0 -and $tries++ -le 3)
 	#	vagrant rdp
 	email -bs "${vmname}: packer is done" taylor
