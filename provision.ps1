@@ -117,7 +117,6 @@ function vmdestroy( $vmname )
 function create_boxstarter_update_file( $vmname, $vmdir )
 {
 @'
-
 Import-Module "$env:ChocolateyInstall\helpers\chocolateyInstaller.psm1" -Force
 Install-ChocolateyPinnedTaskBarItem -TargetFilePath C:\Windows\system32\WindowsPowerShell\v1.0\powershell.exe
 
