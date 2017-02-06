@@ -38,11 +38,12 @@ try {
 	}
 
 } catch {
-    Write-Host $($_.Exception.Message)
-	if ($($_.Exception.Message) -like '*E_OUTOFMEMORY*') {
-	   shutdown /t 30 /c "Install-WindowsUpdate encountered E_OUTOFMEMORY" /r
-	}
 
+	Write-Host "taylordebug $($_.Exception.Message)"
+	if ($($_.Exception.Message) -like '*E_OUTOFMEMORY*') {
+		# shutdown -r has been disabled by boxstarter
+ 		Invoke-Reboot
+	}
 #	throw $_.Exception
 #	Write-ChocolateyFailure 'https://github.com/taylormonacelli/windows-update/update.ps1 failed' $($_.Exception.Message)
 #	throw
