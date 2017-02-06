@@ -160,8 +160,17 @@ SCRIPT9
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
 
-config.vm.provision "bootstrap", type: "shell", inline: `$script9
-config.vm.provision "boxstarter", type: "shell", path: "update2.ps1"
+config.vm.provision "bootstrap", type: "shell" do |s|
+ s.inline = `$script9
+end
+
+config.vm.provision "reboot", type: "shell" do |s1| 
+ s1.inline = "shutdown -t 0 -r"
+end
+
+config.vm.provision "boxstarter", type: "shell" do |s2| 
+ s2.path = "update2.ps1"
+end
 
 config.vm.provider "virtualbox" do |v|
   v.memory = 4024
