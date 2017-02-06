@@ -13,7 +13,7 @@ Install-BoxstarterPackage -Force MyUpdate
 
 try {
 
-	cinst install --yes --allow-empty-checksums vim
+#	cinst install --yes --ignore-checksums vim
 
 	# Boxstarter options
 	$Boxstarter.RebootOk=$true # Allow reboots?
