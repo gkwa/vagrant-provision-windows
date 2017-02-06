@@ -42,8 +42,10 @@ try {
 
 } catch {
 	Write-Host "DEBUG $($_.Exception.Message)"
-	if ($($_.Exception.Message) -like '*E_OUTOFMEMORY*') {
-		# shutdown -r has been disabled by boxstarter
- 		Invoke-Reboot
-	}
+	$Logfile = "c:\$(gc env:computername).log"
+	Add-content $Logfile -value Get-Date
+	Add-content $Logfile -value $logstring
+	# shutdown -r has been disabled by boxstarter
+ 	Invoke-Reboot
 }
+
