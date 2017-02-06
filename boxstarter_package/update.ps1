@@ -41,9 +41,9 @@ try {
 	}
 
 } catch {
-	Write-Host "DEBUG $($_.Exception.Message)"
+	$logstring = $_.Exception.Message
+	Write-Host "DEBUG $logstring"
 	$Logfile = "c:\$(gc env:computername).log"
-	$logstring = $($_.Exception.Message)
 	Add-content $Logfile -value Get-Date
 	Add-content $Logfile -value $logstring
 	# shutdown -r has been disabled by boxstarter
