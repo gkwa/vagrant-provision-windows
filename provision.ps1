@@ -117,7 +117,7 @@ function vmdestroy( $vmname )
 function setup_boxstarter_package( $vmname, $vmdir )
 {
 	mkdir -force $vmdir/boxstarter_package | Out-Null
-g	Copy-Item $root/boxstarter_package/update.ps1 $vmdir/boxstarter_package/update.ps1
+	Copy-Item $root/boxstarter_package/update.ps1 $vmdir/boxstarter_package/update.ps1
 }
 
 function create_boxstarter_update_file( $vmname, $vmdir )
