@@ -166,6 +166,7 @@ SCRIPT9
 
 Vagrant.configure("2") do |config|
   config.vm.box = "$vmname"
+  config.vm.communicator = "winrm"
 
 config.vm.provision "bootstrap", type: "shell" do |s|
  s.inline = `$script9
