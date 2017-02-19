@@ -135,7 +135,7 @@ cinst --yes boxstarter
 # 	-NoNewWindow:$false
 New-PackageFromScript c:\vagrant\boxstarter_package\update.ps1 MyUpdate
 Install-BoxstarterPackage -Force MyUpdate
-'@ | Out-File -encoding 'ASCII' $vmdir/update2.ps1
+'@ | Out-File -encoding ASCII $vmdir/update2.ps1
 }
 
 
@@ -187,7 +187,7 @@ v.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
 v.customize ["modifyvm", :id, "--vcpenabled", "on"]
 end
 end
-"@ | Out-File -encoding 'ASCII' $vmdir/Vagrantfile
+"@ | Out-File -encoding ASCII $vmdir/Vagrantfile
 }
 
 function listHandles($vmname, $handle_out)
