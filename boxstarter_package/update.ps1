@@ -20,8 +20,6 @@ try {
 
 	$toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
-	cinst --yes --ignore-checksums vim
-
 	# Basic setup
 	Update-ExecutionPolicy RemoteSigned
 	Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives `
