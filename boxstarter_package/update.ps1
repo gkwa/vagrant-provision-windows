@@ -23,8 +23,7 @@ try {
 	# Basic setup
 	Update-ExecutionPolicy RemoteSigned
 	Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives `
-	  -EnableShowProtectedOSFiles -EnableShowFileExtensions `
-	  -EnableShowFullPathInTitleBar
+	  -EnableShowFileExtensions -EnableShowFullPathInTitleBar
 	#Enable-RemoteDesktop
 	Disable-InternetExplorerESC
 	Set-TaskbarOptions -Size Small -Lock -Dock Bottom -Combine Never
